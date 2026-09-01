@@ -676,7 +676,7 @@ body {
 }
 
 .occupiedBar {
-	background: #9bb9e9;
+	background: #e7d9fb;
 	border: 1px solid #6599e8;
 	color: #173f7a;
 	cursor: pointer;
@@ -685,7 +685,7 @@ body {
 }
 
 .vehicleOccupiedBar{
-	background: #bac9cf;
+	background: #e7d9fb;
 	border: 1px solid #030c1a;
 	color: #341d75;
 	cursor: pointer;
@@ -939,9 +939,9 @@ body {
 }
 
 .customTitle {
-    font-size: 12px !important;
+    font-size: 15px !important;
     font-weight: bold;
-    color: rgb(203, 171, 224);
+    color: rgb(14, 13, 15);
 	
 }
 .selectedFO {

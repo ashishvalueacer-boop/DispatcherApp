@@ -16,7 +16,7 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/format/DateFormat"
-], function (Controller, MessageToast, MessageBox, Dialog, Button,
+], function (BaseController, MessageToast, MessageBox, Dialog, Button,
     Toolbar,
     ToolbarSpacer,
     Title,

@@ -38,7 +38,7 @@
         id="dashboardPage"
         showHeader="true"
         class="cockpitPage"
-        enableScrolling="false">
+        enableScrolling="true">
         <customHeader>
             <Bar>
                 <contentLeft>
@@ -48,7 +48,7 @@
                         <VBox class="loginIconWrap" justifyContent="Center" alignItems="Center">
                                 <core:Icon src="sap-icon://shipping-status" size="1.8rem" class="loginIcon" />
                     </VBox>
-                    <Title text="Driver Assignment Cockpit" />
+                    <Title text="Dispatcher Cockpit" />
                 </contentLeft>
                 <contentRight>
                     <Button id="aiProposalButton" text="Use AI Proposal" type="Emphasized" press=".onUseAIProposal"/>
