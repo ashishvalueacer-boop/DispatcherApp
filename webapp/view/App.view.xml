@@ -1,0 +1,324 @@
+<mvc:View controllerName="dispatcherns.dispatcherapp.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <App id="appNavigator" initialPage="dashboardPage">
+        <pages>
+            <Page id="loginPage" showHeader="false" enableScrolling="false" class="loginPage">
+                <VBox id="loginShell" class="loginShell" fitContainer="true" justifyContent="Center" alignItems="Center">
+                    <VBox class="loginCard" width="450px">
+                        <HBox class="loginBrand" alignItems="Center">
+                            <VBox class="loginIconWrap" justifyContent="Center" alignItems="Center">
+                                <core:Icon src="sap-icon://shipping-status" size="1.8rem" class="loginIcon" />
+                            </VBox>
+                            <VBox class="loginBrandText">
+                                <Text text="LOGISTICS CONTROL CENTER" class="loginEyebrow" />
+                                <Title text="Driver Assignment Cockpit" level="H2" class="loginTitle" />
+                            </VBox>
+                        </HBox>
+                        <Text text="Welcome back. Sign in to coordinate freight orders and driver assignments." class="loginSubtitle" />
+                        <VBox class="loginForm">
+                            <Label text="User ID" labelFor="loginUserId" class="loginLabel" />
+                            <Input id="loginUserId" placeholder="Enter your user ID" submit=".onLogin" class="loginInput" />
+                            <Label text="Password" labelFor="loginPassword" class="loginLabel" />
+                            <Input id="loginPassword" type="Password" placeholder="Enter your password" submit=".onLogin" class="loginInput" />
+                        </VBox>
+                        <Text id="loginError" visible="false" class="loginError" />
+                        <Button text="Sign In to Cockpit" icon="sap-icon://log" iconFirst="false" type="Emphasized" width="100%" press=".onLogin" class="loginSubmit" />
+                        <HBox class="loginSecurity" alignItems="Center">
+                            <core:Icon src="sap-icon://locked" size=".8rem" />
+                            <Text text="Secure access for authorized dispatch teams" />
+                        </HBox>
+                        <Text text="Demo access: admin  /  Welcome123" class="loginHint" />
+                    </VBox>
+                </VBox>
+            </Page>
+            <Page
+        id="dashboardPage"
+        showHeader="true"
+        class="cockpitPage"
+        enableScrolling="false">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <!-- <Button
+                        icon="sap-icon://menu2"
+                        type="Transparent"/> -->
+                        <VBox class="loginIconWrap" justifyContent="Center" alignItems="Center">
+                                <core:Icon src="sap-icon://shipping-status" size="1.8rem" class="loginIcon" />
+                    </VBox>
+                    <Title text="Driver Assignment Cockpit" />
+                </contentLeft>
+                <contentRight>
+                    <Button id="aiProposalButton" text="Use AI Proposal" type="Emphasized" press=".onUseAIProposal"/>
+                    <Button id="acceptAIButton" text="Accept AI Proposal" type="Accept" visible="false" press=".onAcceptAIProposal"/>
+                    <Button id="rejectAIButton" text="Reject AI Proposal" type="Reject" visible="false" press=".onRejectAIProposal"/>
+                    <Button
+                        icon="sap-icon://bell"
+                        type="Transparent"/>
+                    <Button
+                        icon="sap-icon://person-placeholder"
+                        type="Transparent"/>
+                    <Button text="Logout" type="Transparent" press=".onLogout" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+            <VBox class="cockpitRoot">
+                <Toolbar class="filterToolbar">
+                    <Label text="From Date"/>
+                    <DatePicker
+                        value=""
+                       displayFormat="dd MMM yyyy HH:mm"
+                       valueFormat="yyyy-MM-dd'T'HH:mm:ss"
+                        width="220px"
+                        id="fromDate" 
+                        change=".onDateChange"/>
+                    <Label text="To Date"/>
+                    <DatePicker
+                        value=""
+                       displayFormat="dd MMM yyyy HH:mm"
+                       valueFormat="yyyy-MM-dd'T'HH:mm:ss"
+                        width="220px"
+                        id="toDate"
+                        change=".onDateChange"/>
+                    <Label text="Location"/>
+                    <Select width="110px">
+                        <items>
+                            <core:Item text="All" />
+                            <core:Item text="Mumbai" />
+                            <core:Item text="Pune" />
+                        </items>
+                    </Select>
+                    <Label text="Carrier" />
+                    <Select width="110px">
+                        <items>
+                            <core:Item text="All" />
+                            <core:Item text="Carrier A" />
+                            <core:Item text="Carrier B" />
+                        </items>
+                    </Select>
+                    <Label text="Mode" />
+                    <Select width="90px">
+                        <items>
+                            <core:Item text="All" />
+                            <core:Item text="Road" />
+                        </items>
+                    </Select>
+                    <Label text="Driver Status" />
+                    <Select width="120px">
+                        <items>
+                            <core:Item text="All" />
+                            <core:Item text="Available" />
+                            <core:Item text="On Break" />
+                        </items>
+                    </Select>
+                    <Label text="FO Status" />
+                    <Select width="110px">
+                        <items>
+                            <core:Item text="All" />
+                            <core:Item text="Open" />
+                        </items>
+                    </Select>
+                     <Button
+                        text="Go"
+                        type="Emphasized"
+                        press=".onFilter"
+                    />
+                    <Button
+                        text="Reset"
+                        type="Transparent"
+                    />
+                    <ToolbarSpacer />
+                    <Button
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                    /> 
+                </Toolbar>
+                <HBox
+                    class="mainArea"
+                    fitContainer="true">
+                    <VBox
+                        id="driverPanel"
+                        width="250px"
+                        class="driverPanel">
+                        <Toolbar>
+                            <Title text="DRIVERS" />
+                            <ToolbarSpacer />
+                            <Button
+                                icon="sap-icon://filter"
+                                type="Transparent"/>
+                            <Button
+                                id="driverPanelToggle"
+                                icon="sap-icon://navigation-left-arrow"
+                                type="Transparent"
+                                tooltip="Collapse driver panel"
+                                press=".onToggleDriverPanel"/>
+                        </Toolbar>
+                        <SearchField
+                            placeholder="Search Driver"
+                            liveChange=".onDriverSearch"
+                        />
+                        <List
+                            id="driverList"
+                            items="{/drivers}"
+                            mode="SingleSelectMaster"
+                            selectionChange=".onDriverSelect"
+                        >
+                            <CustomListItem>
+                                <HBox
+                                    class="driverItem"
+                                    alignItems="Center"
+                                >
+                                    <core:Icon
+                                        src="sap-icon://employee"
+                                        size="1.7rem"
+                                    />
+                                    <VBox class="driverText">
+                                        <Title
+                                            text="{name}"
+                                            level="H5"
+                                        />
+                                        <Text
+                                            text="{id} | License: {license}"
+                                        />
+                                        <Text text="{location}" />
+                                    </VBox>
+                                    <ObjectStatus
+                                        text="{status}"                                                                                                 
+                                        state = "{= ${status} === 'Available' ? 'Success' :
+                                        ${status} === 'On Break' ? 'Warning' :
+                                        ${status} === 'Assigned' ? 'Information' :'Error'}"
+                                        inverted="true"
+                                        />
+                                </HBox>
+                            </CustomListItem>
+                        </List>
+                    </VBox>
+                    <core:HTML content="&lt;div class='resizeHandle driverResizeHandle' title='Resize driver panel'&gt;&lt;/div&gt;"/>
+                    <VBox class="ganttArea" fitContainer="true" width="100%">
+                        <VBox class="ganttCard">
+                            <Toolbar>
+                                <Title class="customTitle" text="UNASSIGNED FREIGHT ORDERS" />
+                                <ToolbarSpacer />
+                                <Button
+                                    id="expandFOButton"
+                                    icon="sap-icon://full-screen"
+                                    type="Transparent"
+                                    tooltip="Expand Unassigned Freight Orders"
+                                    press=".onExpandUnassignedFO" />
+                                <Text id="foDate" />
+                            </Toolbar>
+                            <core:HTML content="&lt;div id='foGantt' class='ganttHost'&gt;&lt;/div&gt;"/>
+                        </VBox>
+                        <VBox class="ganttCard">
+                            <Toolbar>
+                                <Title class="customTitle" text="DRIVERS" />
+                                <ToolbarSpacer />
+                                <Button
+                                    id="expandDriverButton"
+                                    icon="sap-icon://full-screen"
+                                    type="Transparent"
+                                    tooltip="Expand Unassigned Freight Orders"
+                                    press=".onExpandUnassignedFO" />
+                                <Text id="driverDate" />
+                            </Toolbar> 
+                            <core:HTML content="&lt;div id='driverGantt' class='ganttHost'&gt;&lt;/div&gt;"/>
+                        </VBox>
+                        <VBox class="ganttCard">
+                            <Toolbar>
+                                <Title class="customTitle" text="VEHICLES" />
+                                <ToolbarSpacer />
+                                <Button
+                                    id="expandVehicleButton"
+                                    icon="sap-icon://full-screen"
+                                    type="Transparent"
+                                    tooltip="Expand Unassigned Freight Orders"
+                                    press=".onExpandUnassignedFO" />
+                                <Text  id="vehicleDate" />
+                            </Toolbar>
+                            <core:HTML content="&lt;div id='vehicleGantt' class='ganttHost'&gt;&lt;/div&gt;"/>
+                        </VBox>
+                        <HBox class="legend">
+                            <ObjectStatus text="Available (Vacant)" state="Success" />
+                            <ObjectStatus text="Occupied (Assigned)" state="Information" />
+                            <ObjectStatus text="Break" state="Warning" />
+                            <Text text="Drag an FO bar onto a driver row to assign" />
+                        </HBox>
+                    </VBox>
+                    <core:HTML content="&lt;div class='resizeHandle detailsResizeHandle' title='Resize details panel'&gt;&lt;/div&gt;"/>
+                    <VBox
+                        id="detailsPanel"
+                        width="250px"
+                        class="detailsPanel">
+                        <Toolbar>
+                            <Title text="FREIGHT ORDER DETAILS" />
+                            <ToolbarSpacer />
+                            <Button
+                                id="detailsPanelToggle"
+                                icon="sap-icon://navigation-right-arrow"
+                                type="Transparent"
+                                tooltip="Collapse details panel"
+                                press=".onToggleDetailsPanel"
+                            />
+                        </Toolbar>
+                        <VBox class="detailBody">
+                            <Title
+                                id="foTitle"
+                                text="Select a Freight Order"
+                                level="H3"
+                            />
+                            <ObjectStatus id="foStatus" />
+                            <Text id="foRoute" />
+                            <Text id="foTime" />
+                            <Text id="foDistance" />
+                            <Text id="foCarrier" />
+                            <Text id="foPriority" />
+                            <Text id="foMode" />
+                            <Text id="foWeight" />
+                            <HBox class="foShiftControls" alignItems="Center">
+                                <Label text="Shift Time"/>
+                                <Button icon="sap-icon://navigation-left-arrow" type="Transparent" tooltip="Shift freight order one hour earlier" press=".onShiftEarlier"/>
+                                <Button icon="sap-icon://navigation-right-arrow" type="Transparent" tooltip="Shift freight order one hour later" press=".onShiftLater"/>
+                            </HBox>
+                            <Label text="Assign To Driver" />
+                            <Select
+                                id="driverSelect"
+                                width="100%"
+                                items="{/drivers}">
+                                <core:Item
+                                    key="{id}"                                    
+                                    text="{name}"                        
+                                />
+                            </Select>
+                            <Button
+                                text="Assign Driver"
+                                type="Emphasized"
+                                width="100%"
+                                press=".onAssign"
+                            />
+                        </VBox>
+                        <Toolbar>
+                            <Title text="DRIVER DETAILS" />
+                        </Toolbar>
+                        <VBox class="detailBody">
+                            <Title
+                                id="driverTitle"
+                                text="Select a Driver fot me"
+                                level="H5"
+                            />
+                            <ObjectStatus id="driverStatus" />
+                            <Text id="driverId" />
+                            <Text id="driverLocation" />
+                            <Text id="driverVehicle" />
+                            <Text id="driverType" />
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+        </pages>
+    </App>
+</mvc:View>

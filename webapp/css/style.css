@@ -1,0 +1,984 @@
+/* Enter your custom styles here *//* Final panel-only typography overrides */
+.driverPanel,
+.detailsPanel {
+	font-size: 9px !important
+}
+
+.driverPanel .sapMText,
+.driverPanel .sapMLabel,
+.driverPanel .sapMObjectStatusText,
+.driverPanel .sapMBtnContent,
+.driverPanel input,
+.detailsPanel .sapMText,
+.detailsPanel .sapMLabel,
+.detailsPanel .sapMObjectStatusText,
+.detailsPanel .sapMBtnContent,
+.detailsPanel input {
+	font-size: 9px !important
+}
+
+.driverPanel .sapMTitle,
+.detailsPanel .sapMTitle {
+	font-size: 11px !important
+}
+
+html,
+body {
+	height: 100%
+}
+
+#container,
+.sapMPage {
+	height: 100vh !important
+}
+
+.sapMPageEnableScrolling {
+	height: calc(100vh - 40px) !important
+}
+
+.cockpitRoot {
+	height: calc(100vh - 40px) !important;
+	min-height: 0 !important
+}
+
+.mainArea {
+	height: calc(100vh - 125px) !important;
+	min-height: 0 !important;
+	flex: 1 1 auto !important
+}
+
+.ganttArea {
+	height: 100% !important;
+	min-height: 0 !important
+}
+
+.ganttCard {
+	flex: 1 1 0 !important;
+	min-height: 0 !important
+}
+
+.ganttCard>.sapMFlexItem {
+	min-height: 0;
+	flex: 1 1 auto;
+	overflow: hidden
+}
+
+.ganttHost {
+	height: 100%;
+	box-sizing: border-box;
+	overflow: auto
+}
+
+.breakBar {
+	background: #fde7b2;
+	border: 1px solid #e0a72f;
+	height: 18px !important;
+	color: #c00d43
+}
+.breakBar span,
+.breakBar {
+    color: #8D6E00 !important;
+}
+
+.availableBar span,
+.availableBar {
+    color: #1B5E20 !important;
+}
+.assignedBar {
+    background: #E3F2FD !important;
+    border: 1px solid #1976D2 !important;
+    color: #0D47A1 !important;
+}
+
+.assignedBar span,
+.assignedBar {
+    color: #0D47A1 !important;
+}
+.ganttCard>.sapMFlexItem:first-child {
+	flex: 0 0 auto !important;
+	min-height: 32px
+}
+
+.ganttCard>.sapMFlexItem:last-child {
+	flex: 1 1 auto !important;
+	min-height: 0;
+	overflow: hidden
+}
+
+.driverPanel.panelCollapsed,
+.detailsPanel.panelCollapsed {
+	display: none;
+	/* width: 42px !important;
+	min-width: 42px !important;
+	flex: 0 0 42px !important */
+}
+
+.driverPanel.panelCollapsed>.sapMFlexItem:not(:first-child),
+.detailsPanel.panelCollapsed>.sapMFlexItem:not(:first-child) {
+	display: none
+}
+
+.driverPanel.panelCollapsed .sapMTitle,
+.detailsPanel.panelCollapsed .sapMTitle {
+	overflow: hidden;
+	white-space: nowrap
+}
+
+.resizeHandle {
+	flex: 0 0 8px !important;
+	width: 8px !important;
+	height: 100%;
+	box-sizing: border-box;
+	cursor: col-resize;
+	background: transparent;
+	position: relative;
+	z-index: 5
+}
+
+.resizeHandle:after {
+	content: "";
+	position: absolute;
+	top: 45%;
+	left: 3px;
+	width: 2px;
+	height: 10%;
+	min-height: 32px;
+	background: #cbd5e1;
+	border-radius: 2px
+}
+
+.resizeHandle:hover:after {
+	background: #1677c8
+}
+
+.ganttRow {
+	height: 18px !important;	
+	margin-top: 0;
+}
+
+.ganttRow .timeGrid {
+	min-height: 28px !important;
+	width: 100%;
+	background-image: linear-gradient(to right, #2c13b8 1px, transparent 1px);
+
+}
+
+.foSelector {
+	font-size: small;
+
+}
+
+/* .ganttBar{top:6px!important;height:20px!important} */
+.ganttBar {
+	top: 6px !important;
+	height: 26px !important;
+
+}
+
+.aiSuggestionBar {
+	background: #fff1b8 !important;
+	border: 2px dashed #d08b00 !important;
+	color: #704b00 !important;
+	z-index: 20 !important;
+	cursor: pointer;
+	pointer-events: auto !important;
+	box-shadow: inset 0 0 0 1px #fff8d6
+}
+
+.timeCell {
+	padding-top: 6px
+}
+
+.driverPanel,
+.ganttCard,
+.detailsPanel {
+	font-size: calc(1rem - 2px)
+}
+
+.driverPanel,
+.detailsPanel {
+	font-size: 9px !important
+}
+
+.driverPanel {
+	min-height: 0
+}
+
+.driverPanel>.sapMFlexItem:last-child {
+	min-height: 0;
+	overflow-y: auto;
+	overflow-x: hidden
+}
+
+.driverPanel .sapMList {
+	min-height: 0
+}
+
+.driverPanel .sapMText,
+.driverPanel .sapMLabel,
+.driverPanel .sapMObjectStatusText,
+.driverPanel .sapMBtnContent,
+.driverPanel input,
+.detailsPanel .sapMText,
+.detailsPanel .sapMLabel,
+.detailsPanel .sapMObjectStatusText,
+.detailsPanel .sapMBtnContent,
+.detailsPanel input {
+	font-size: 9px !important
+}
+
+.driverPanel .sapMTitle,
+.detailsPanel .sapMTitle {
+	font-size: 11px !important
+}
+
+.driverPanel .sapMText,
+.driverPanel .sapMLabel,
+.driverPanel .sapMObjectStatusText,
+.driverPanel .sapMBtnContent,
+.driverPanel .sapMTitle,
+.ganttCard .sapMText,
+.ganttCard .sapMBtnContent,
+.ganttCard .sapMTitle,
+.detailsPanel .sapMText,
+.detailsPanel .sapMLabel,
+.detailsPanel .sapMObjectStatusText,
+.detailsPanel .sapMBtnContent,
+.detailsPanel .sapMTitle {
+	font-size: small;
+	/* font-size: calc(1rem - 2px) !important */
+}
+
+.ganttHeader .timeGrid {
+	display: flex;
+	flex: 1;
+	align-items: stretch;
+	min-height: 15px;
+	background: #f5cf82;
+}
+
+.mainArea.sapMHBox {
+	display: flex
+}
+
+.driverPanel.sapMFlexBox,
+.detailsPanel.sapMFlexBox,
+.ganttArea.sapMFlexBox {
+	box-sizing: border-box
+}
+
+@media (max-width:800px) {
+	.mainArea.sapMHBox {
+		flex-direction: column !important
+	}
+
+	.driverPanel.sapMFlexBox,
+	.detailsPanel.sapMFlexBox,
+	.ganttArea.sapMFlexBox {
+		width: 100% !important;
+		min-width: 0 !important
+	}
+
+	.resizeHandle {
+		display: none
+	}
+}
+
+/* Responsive cockpit layout */
+.cockpitRoot {
+	font-size: .92rem
+}
+
+.sapMTitle {
+	font-size: .92rem
+}
+
+.ganttHeader,
+.ganttRow {
+	font-size: .86rem
+}
+
+.rowLabel {
+	font-size: 10px;
+	min-height: 10px !important;
+	
+}
+
+.timeCell {
+	font-size: 9px
+}
+
+@media (max-width:1100px) {
+	.mainArea {
+		height: calc(100vh - 125px) !important;
+		overflow: auto
+	}
+
+	.driverPanel,
+	.detailsPanel {
+		flex: 0 0 auto;
+		width: 240px !important
+	}
+
+	.ganttArea {
+		min-width: 0;
+		flex: 1 1 auto
+	}
+}
+
+@media (max-width:800px) {
+	.filterToolbar {
+		overflow-x: auto
+	}
+
+	.mainArea {
+		height: calc(100vh - 105px) !important;
+		flex-direction: column;
+		overflow-y: auto
+	}
+
+	.driverPanel,
+	.detailsPanel,
+	.ganttArea {
+		width: 100% !important;
+		min-width: 0;
+		flex: 0 0 auto
+	}
+
+	.driverPanel {
+		max-height: 210px
+	}
+
+	.ganttArea {
+		height: 640px !important
+	}
+
+	.ganttCard {
+		min-height: 280px !important
+	}
+
+	.detailsPanel {
+		max-height: 360px
+	}
+
+	.legend {
+		flex-wrap: wrap
+	}
+}
+
+@media (max-width:480px) {
+	.filterToolbar {
+		margin: .2rem
+	}
+
+	.mainArea {
+		padding: .2rem;
+		gap: .35rem
+	}
+
+	.ganttArea {
+		height: 600px !important
+	}
+
+	.ganttCard {
+		min-height: 260px !important
+	}
+
+	.ganttHeader,
+	.ganttRow {
+		min-width: 760px
+	}
+
+	.ganttBar {
+		font-size: 9px
+	}
+}
+
+body {
+	background: #f7f8fa
+}
+
+.cockpitRoot {
+	height: 100%;
+	min-height: 0;
+	background: #f7f8fa
+}
+
+.filterToolbar {
+	margin: .4rem;
+	border: 1px solid #d9dee5;
+	border-radius: 6px;
+	background: #fff
+}
+
+.mainArea {
+	height: calc(100vh - 125px);
+	min-height: 0;
+	gap: .6rem;
+	padding: .4rem
+}
+
+.ganttArea {
+	height: 100%;
+	min-width: 800px;
+	min-height: 0;
+	gap: .6rem
+}
+
+.ganttCard {
+	flex: 1 1 0;
+	min-height: 0
+}
+
+.ganttCard>.sapMFlexItem {
+	min-height: 0;
+	flex: 1 1 auto
+}
+
+.ganttHost {
+	height: 100%;
+	box-sizing: border-box;
+	overflow: auto;
+	padding: .25rem .5rem
+}
+
+
+
+.ganttHeader {
+	position: sticky;
+	top: 0;
+	z-index: 12
+}
+
+.ganttRow .rowLabel,
+.ganttHeader .rowLabel {
+	position: sticky;
+	left: 0;
+	background: #e9e0ce;
+}
+
+.ganttRow .rowLabel {
+	z-index: 10
+}
+
+.ganttHeader .rowLabel {
+	z-index: 14;
+	background: #f8fafc
+}
+
+.ganttHeader .timeGrid {
+	z-index: 12;
+	background-color: #f5cf82;
+}
+
+body {
+	background: #f7f8fa
+}
+
+.cockpitRoot {
+	height: 100%;
+	background: #f7f8fa
+}
+
+.filterToolbar {
+	margin: .4rem;
+	border: 1px solid #d9dee5;
+	border-radius: 6px;
+	background: #fff
+}
+
+.mainArea {
+	height: calc(100vh - 125px);
+	gap: .6rem;
+	padding: .4rem
+}
+
+.driverPanel,
+.detailsPanel,
+.ganttCard {
+	background: #fff;
+	border: 1px solid #d9dee5;
+	border-radius: 7px;
+	overflow: hidden
+}
+
+.driverItem {
+	padding: .6rem;
+	gap: .5rem;
+	border-bottom: 1px solid #eef0f2
+}
+
+.driverText {
+	flex: 1
+}
+
+.ganttArea {
+	min-width: 600px;
+	gap: .6rem
+}
+
+.ganttCard {
+	flex: 1;
+	min-height: 280px
+}
+
+.ganttHost {
+	overflow: auto;
+	padding: .25rem .5rem
+}
+
+.ganttHeader,
+.ganttRow {
+	display: flex;
+	min-width: 900px
+}
+
+.ganttHeader {
+	height: 34px;
+	background: #f8fafc;
+	border-bottom: 1px solid #d9dee5
+}
+
+.rowLabel {
+	width: 150px;
+	min-width: 150px;
+	padding: 5px 8px;
+	box-sizing: border-box;
+	font-size: 11px
+}
+
+.rowLabel span {
+	color: #64748b
+}
+
+.ganttHeaderLabel {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px;
+}
+
+.ganttHeaderLabel h3 {
+	margin: 0;
+	font-size: 11px;
+}
+
+.sortActions {
+	display: flex;
+	gap: 2px;
+}
+
+.sortButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	padding: 2px;
+	border: 1px solid #9bb9e9;
+	border-radius: 3px;
+	background: #ffffff;
+	color: #0a6ed1;
+	cursor: pointer;
+}
+
+.sortButton:hover,
+.sortButton:focus-visible {
+	border-color: #0a6ed1;
+	background: #eaf3fc;
+	outline: none;
+}
+
+.sortButton svg {
+	width: 13px;
+	height: 13px;
+	fill: currentColor;
+}
+
+.timeGrid {
+	position: relative;
+	flex: 1;
+	min-height: 10px;
+	background-image: linear-gradient(to right, #e5e7eb 1px, transparent 1px);
+	background-size: calc(100% / 16) 100%
+}
+
+.timeCell {
+	flex: 1;
+	text-align: center;
+	padding-top: 8px;
+	font-size: 10px;
+	color: #475569;
+	border-left: 1px solid #e5e7eb
+}
+
+.ganttRow {
+	min-height: 24px;
+	max-height: 24px;
+	border-bottom: 2px solid #edf0f2
+}
+
+.ganttCells {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	pointer-events: none
+}
+
+.gridLine {
+	flex: 1;
+	border-left: 2px solid #edf0f2;
+	
+	
+}
+
+.ganttBar {
+	position: absolute;
+	top: 5px;
+	height: 18px !important;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	font-size: 10px;
+	font-weight: 600;
+	z-index: 3;
+	overflow: hidden;
+	white-space: nowrap
+}
+
+.foBar {
+	background: #e7d9fb;
+	border: 1px solid #a77bd4;
+	color: #341d75;
+	cursor: pointer;
+	height: 18px !important;
+	
+}
+
+.availableBar {
+	background: #a6e4b4;
+	border: 1px solid #83c995;
+	color: #166534;
+	height: 18px !important;
+}
+
+.aiSuggestionBar {
+	background: #fff1b8 !important;
+	border: 2px dashed #d08b00 !important;
+	color: #704b00 !important;
+	z-index: 20 !important;
+	cursor: pointer;
+	pointer-events: auto !important;
+	box-shadow: inset 0 0 0 1px #fff8d6;
+	height: 18px !important;
+}
+
+.occupiedBar {
+	background: #9bb9e9;
+	border: 1px solid #6599e8;
+	color: #173f7a;
+	cursor: pointer;
+	padding-right: 22px;
+	height: 18px !important;
+}
+
+.vehicleOccupiedBar{
+	background: #bac9cf;
+	border: 1px solid #030c1a;
+	color: #341d75;
+	cursor: pointer;
+	padding-right: 22px;
+	height: 18px !important;
+}
+
+.unassignButton {
+	position: absolute;
+	right: 3px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: #d12f3c;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	cursor: pointer;
+}
+
+.unassignButton:hover,
+.unassignButton:focus {
+	background: #a61f2a;
+	outline: 2px solid #fff;
+}
+
+.foBar.dropTarget {
+	outline: 3px dashed #1677c8;
+	outline-offset: 2px;
+	background: #fffaee
+}
+
+.driverRow.dropTarget {
+	outline: 2px dashed #1677c8;
+	outline-offset: -2px;
+	background: #eef7ff
+}
+.vehRow.dropTarget{
+	outline: 2px dashed #1677c8;
+	outline-offset: -2px;
+	background: #eef7ff
+
+}
+
+.legend {
+	gap: 1rem;
+	padding: .5rem;
+	background: #fff;
+	border: 1px solid #d9dee5;
+	border-radius: 6px
+}
+
+.detailBody {
+	padding: 1rem;
+	gap: .5rem
+}
+
+.detailsPanel {
+	overflow: auto
+}
+
+@media(max-width:1200px) {
+	.detailsPanel {
+		width: 260px !important
+	}
+
+	.driverPanel {
+		width: 250px !important
+	}
+}
+
+
+.loginPage,
+.loginPage .sapMPageCont {
+	background:white
+	    /* radial-gradient(circle at 12% 15%, rgba(65, 182, 230, .32) 0, rgba(65, 182, 230, 0) 30%),
+		radial-gradient(circle at 88% 82%, rgba(46, 204, 113, .18) 0, rgba(46, 204, 113, 0) 28%),
+		linear-gradient(135deg, #0b1f3a 0%, #123c68 53%, #0e6a70 100%) !important */
+}
+
+.foTooltip {
+	position: fixed;
+	font-weight: bold;
+	display: none;
+	min-width: 120px;
+	max-width: 120px !important;
+	padding: 10px;
+	background:transparent;
+	color: black;
+	border-radius: 10px;
+	font-size: 10px;
+	line-height: 1.5;
+	z-index: 99999;
+	pointer-events: none;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	border-left: 4px solid #0070f2;
+	border-right:4px solid #0070f2;
+	border-top:4px solid #0070f2;
+	border-bottom:4px solid #0070f2;
+}
+
+.foTooltip .title {
+	font-weight: bold;
+	font-size: 13px;
+	margin-bottom: 6px;
+	color: #1e2081;
+}
+
+.foTooltip .row {
+	margin: 2px 0;
+}
+
+.foTooltip .label {
+	font-weight: bold;
+	color: #d1e8ff;
+}
+
+
+
+.loginCard {
+	padding: 2.25rem;
+	gap: .9rem;
+	box-sizing: border-box;
+	border: 1px solid rgba(255, 255, 255, .66);
+	border-radius: 20px;
+	background:  #627d98;
+	box-shadow: 0 28px 70px rgba(2, 16, 35, .36)
+}
+
+.loginBrand {
+	gap: .85rem
+}
+
+.loginIconWrap {
+	width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 14px;
+	background: linear-gradient(145deg, #0a6ed1, #17a2a4);
+	box-shadow: 0 8px 18px rgba(10, 110, 209, .25)
+}
+
+.loginIcon {
+	color: #fff
+}
+
+.loginBrandText {
+	gap: .12rem
+}
+
+.loginEyebrow {
+	color: #16757b;
+	font-size: .67rem;
+	font-weight: 700;
+	letter-spacing: .1em
+}
+
+.loginTitle {
+	color: white;	
+	
+	font-size: 1.45rem !important;
+	line-height: 1.25
+}
+
+.loginSubtitle {
+	color: #627d98;
+	font-size: .92rem;
+	line-height: 1.5;
+	margin: .35rem 0 .4rem
+}
+
+.loginForm {
+	gap: .35rem
+}
+
+.loginLabel {
+	color: #334e68 !important;
+	font-size: .78rem !important;
+	font-weight: 700;
+	margin-top: .35rem
+}
+
+.loginInput .sapMInputBaseContentWrapper {
+	border: 1px solid #cbd8e6 !important;
+	border-radius: 9px !important;
+	box-shadow: none !important
+}
+
+.loginInput .sapMInputBaseInner {
+	background: #f8fbfe !important;
+	border-radius: 9px !important;
+	/* height: 2.65rem !important; */
+	padding: 0 .8rem !important
+}
+
+.loginInput.sapMFocus .sapMInputBaseContentWrapper {
+	border-color: #0a6ed1 !important;
+	box-shadow: 0 0 0 3px rgba(10, 110, 209, .13) !important
+}
+
+.loginSubmit {
+	margin-top: .65rem
+}
+
+.loginSubmit .sapMBtnInner {
+	height: 2.8rem !important;
+	border: 0 !important;
+	border-radius: 9px !important;
+	background: linear-gradient(90deg, #0a6ed1, #087f8c) !important;
+	box-shadow: 0 8px 16px rgba(10, 110, 209, .22)
+}
+
+.loginSubmit .sapMBtnContent,
+.loginSubmit .sapMBtnIcon {
+	line-height: 2.8rem !important;
+	color: #fff !important;
+	font-weight: 700
+}
+
+.loginSecurity {
+	justify-content: center;
+	gap: .35rem;
+	color: #627d98;
+	font-size: .75rem;
+	margin-top: .25rem
+}
+
+.loginSecurity .sapUiIcon,
+.loginSecurity .sapMText {
+	color: #627d98 !important;
+	font-size: .75rem !important
+}
+
+.loginError {
+	color: #bb0000;
+	font-size: .85rem;
+	padding: .55rem .7rem;
+	border-radius: 7px;
+	background: #fff2f2
+}
+
+.loginHint {
+	color: #829ab1;
+	font-size: .74rem;
+	text-align: center;
+	margin-top: .15rem
+}
+
+.customTitle {
+    font-size: 12px !important;
+    font-weight: bold;
+    color: rgb(203, 171, 224);
+	
+}
+.selectedFO {
+    outline: 3px solid #0070f2;
+    outline-offset: 2px;
+    box-shadow: 0 0 8px rgba(0, 112, 242, 0.35);
+}
+.foAssignmentIcon {
+    display: inline-flex;
+	   width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 12px;
+	font-weight: 700;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* Fully assigned */
+.foAssigned {
+    background: #E8F5E9;
+    color: #1B5E20;
+    border: 1px solid #2E7D32;
+}
+
+/* Driver assigned, vehicle missing */
+.foPartial {
+    background: #FFF8E1;
+    color: #E65100;
+    border: 1px solid #F9A825;
+}
+
+/* Nothing assigned */
+.foNotAssigned {
+    background: #FFEBEE;
+    color: #B71C1C;
+    border: 1px solid #C62828;
+}

@@ -1,0 +1,102 @@
+{
+  "_version": "1.84.0",
+  "sap.app": {
+    "id": "dispatcherns.dispatcherapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.24.0",
+      "toolsId": "bc329054-262c-4b0b-8d18-0fddcd818ddd"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.151.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "dispatcherns.dispatcherapp.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "dispatcherns.dispatcherapp.view",
+        "async": true,
+        "viewPath": "dispatcherns.dispatcherapp.view"
+      },
+      "routes": [
+        {
+          "name": "RouteDispatcherAppView",
+          "pattern": ":?query:",
+          "target": [
+            "TargetDispatcherAppView"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetDispatcherAppView": {
+          "id": "DispatcherAppView",
+          "name": "DispatcherAppView"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "dispatcherns.dispatcherapp.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "dispatchernsdispatcherapp"
+  }
+}
