@@ -67,20 +67,20 @@
         <content>
             <VBox class="cockpitRoot">
                 <Toolbar class="filterToolbar">
-                    <Label text="From Date"/>
-                    <DatePicker
+                    <Label text="From Date" class="sapUiTinyMarginEnd"/>
+                    <DateTimePicker
                         value=""
                        displayFormat="dd MMM yyyy HH:mm"
                        valueFormat="yyyy-MM-dd'T'HH:mm:ss"
-                        width="220px"
+                        width="170px"
                         id="fromDate" 
                         change=".onDateChange"/>
-                    <Label text="To Date"/>
-                    <DatePicker
+                    <Label text="To Date" class="sapUiSmallMarginBegin sapUiTinyMarginEnd"/>
+                    <DateTimePicker
                         value=""
                        displayFormat="dd MMM yyyy HH:mm"
                        valueFormat="yyyy-MM-dd'T'HH:mm:ss"
-                        width="220px"
+                        width="170px"
                         id="toDate"
                         change=".onDateChange"/>
                     <Label text="Location"/>
@@ -92,7 +92,7 @@
                         </items>
                     </Select>
                     <Label text="Carrier" />
-                    <Select width="110px">
+                    <Select width="80px">
                         <items>
                             <core:Item text="All" />
                             <core:Item text="Carrier A" />
@@ -100,14 +100,14 @@
                         </items>
                     </Select>
                     <Label text="Mode" />
-                    <Select width="90px">
+                    <Select width="80px">
                         <items>
                             <core:Item text="All" />
                             <core:Item text="Road" />
                         </items>
                     </Select>
                     <Label text="Driver Status" />
-                    <Select width="120px">
+                    <Select width="80px">
                         <items>
                             <core:Item text="All" />
                             <core:Item text="Available" />
@@ -115,7 +115,7 @@
                         </items>
                     </Select>
                     <Label text="FO Status" />
-                    <Select width="110px">
+                    <Select width="80px">
                         <items>
                             <core:Item text="All" />
                             <core:Item text="Open" />
@@ -144,7 +144,7 @@
                         width="250px"
                         class="driverPanel">
                         <Toolbar>
-                            <Title text="DRIVERS" />
+                            <Title text="DRIVERS LIST" />
                             <ToolbarSpacer />
                             <Button
                                 icon="sap-icon://filter"
@@ -197,45 +197,53 @@
                         </List>
                     </VBox>
                     <core:HTML content="&lt;div class='resizeHandle driverResizeHandle' title='Resize driver panel'&gt;&lt;/div&gt;"/>
-                    <VBox class="ganttArea" fitContainer="true" width="100%">
-                        <VBox class="ganttCard">
+                    <VBox class="ganttArea" fitContainer="true" width="100%" >
+                        <VBox class="ganttCard" justifyContent="SpaceBetween" id="foSection" visible="{/ui/expandFO}">
                             <Toolbar>
                                 <Title class="customTitle" text="UNASSIGNED FREIGHT ORDERS" />
                                 <ToolbarSpacer />
                                 <Button
+                                    icon="{= ${/ui/expandFO} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }"
+                                    press="onToggleFO"/>
+                                <!-- <Button
                                     id="expandFOButton"
                                     icon="sap-icon://full-screen"
                                     type="Transparent"
                                     tooltip="Expand Unassigned Freight Orders"
-                                    press=".onExpandUnassignedFO" />
+                                    press=".onExpandUnassignedFO" /> -->
                                 <Text id="foDate" />
                             </Toolbar>
                             <core:HTML content="&lt;div id='foGantt' class='ganttHost'&gt;&lt;/div&gt;"/>
                         </VBox>
-                        <VBox class="ganttCard">
+                        <VBox class="ganttCard" justifyContent="SpaceBetween" id="driverSection" visible="{/ui/expandDrivers}">
                             <Toolbar>
                                 <Title class="customTitle" text="DRIVERS" />
                                 <ToolbarSpacer />
-                                <Button
+                                <Button icon="{= ${/ui/expandDrivers} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }"
+                                 press="onToggleDrivers"/>
+                                <!-- <Button
                                     id="expandDriverButton"
                                     icon="sap-icon://full-screen"
                                     type="Transparent"
                                     tooltip="Expand Unassigned Freight Orders"
-                                    press=".onExpandUnassignedFO" />
+                                    press=".onExpandUnassignedFO" /> -->
                                 <Text id="driverDate" />
                             </Toolbar> 
                             <core:HTML content="&lt;div id='driverGantt' class='ganttHost'&gt;&lt;/div&gt;"/>
                         </VBox>
-                        <VBox class="ganttCard">
+                        <VBox class="ganttCard" justifyContent="SpaceBetween">
                             <Toolbar>
-                                <Title class="customTitle" text="VEHICLES" />
+                                <Title class="customTitle" text="VEHICLES" id="vehicleSection" visible="{/ui/expandVehicles}"/>
                                 <ToolbarSpacer />
                                 <Button
+                                    icon="{= ${/ui/expandVehicles} ? 'sap-icon://navigation-up-arrow' : 'sap-icon://navigation-down-arrow' }"
+                                    press="onToggleVehicles"/>
+                                <!-- <Button
                                     id="expandVehicleButton"
                                     icon="sap-icon://full-screen"
                                     type="Transparent"
                                     tooltip="Expand Unassigned Freight Orders"
-                                    press=".onExpandUnassignedFO" />
+                                    press=".onExpandUnassignedFO" /> -->
                                 <Text  id="vehicleDate" />
                             </Toolbar>
                             <core:HTML content="&lt;div id='vehicleGantt' class='ganttHost'&gt;&lt;/div&gt;"/>

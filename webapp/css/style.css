@@ -982,3 +982,15 @@ body {
     color: #B71C1C;
     border: 1px solid #C62828;
 }
+
+.ganttExpanded {
+height: auto;
+overflow: visible;
+transition: all .3s ease;
+}
+ 
+.ganttCollapsed {
+height: 0;
+overflow: hidden;
+transition: all .3s ease;
+}

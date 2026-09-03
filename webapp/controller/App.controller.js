@@ -1,6 +1,6 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
+    "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/Dialog",
     "sap/m/Button",
@@ -15,22 +15,20 @@ sap.ui.define([
     "sap/m/ObjectStatus",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/core/format/DateFormat"
-], function (BaseController, MessageToast, MessageBox, Dialog, Button,
-    Toolbar,
-    ToolbarSpacer,
-    Title,
-    Text,
-    VBox,
-    HBox,
-    List,
-    CustomListItem,
-    ObjectStatus, Filter, FilterOperator, DateFormat) {
+    "sap/ui/core/format/DateFormat",
+    "../service/FreightOrderService",
+    "../service/DriverService",
+    "../service/VehicleService",
+    "../service/AssignmentService"
+], function (BaseController, MessageToast, MessageBox, Dialog, Button, Toolbar, ToolbarSpacer, Title,
+    Text, VBox, HBox, List, CustomListItem, ObjectStatus, Filter, FilterOperator, DateFormat,
+    FreightOrderService, DriverService, VehicleService, AssignmentService,) {
     "use strict";
 
-  return BaseController.extend("dispatcherns.dispatcherapp.controller.App", {
-      onInit: function () {
-            this._render();
+    return BaseController.extend("dispatcherns.dispatcherapp.controller.App", {
+        onInit: function () {
+            //this._render();
+
             this.byId("fromDate").setDateValue(new Date());
             this.byId("toDate").setDateValue(new Date(new Date().setDate(new Date().getDate() + 1)));
             // document.getElementById("foStatusFilter").addEventListener("change", this.onFilter.bind(this));
@@ -38,8 +36,97 @@ sap.ui.define([
 
             this._bFreightOrdersAscending = true;
             this._bDriversAscending = true;
+            this.loadMasterData();
         },
         //****************************Login Code******************************* */
+
+        async loadMasterData() {
+
+
+            const oView = this.getView();
+            try {
+
+                oView.setBusy(true);
+                const [freightOrders, drivers, vehicles, assignments, vehAssignments, proposals] = await Promise.all([
+                    FreightOrderService.getAll(),
+                    DriverService.getAll(),
+                    VehicleService.getAll(),
+                    AssignmentService.getAll(),
+                    AssignmentService.getAllVehAssignments()
+
+                ]);
+
+                //const oModel = new JSONModel(data);
+                let oModel = oView.getModel();
+                if (!oModel) {
+                    oModel = new sap.ui.model.json.JSONModel({
+                        freightOrders: [],
+                        drivers: [],
+                        vehicles: [],
+                        assignments: [],
+                        vehAssignments: [],
+                        proposals: [],
+
+                        ui: {
+                            expandFO: true,
+                            expandDrivers: true,
+                            expandVehicles: true
+                        }
+                    });
+                    oView.setModel(oModel);
+                }
+                oModel.setProperty("/freightOrders", freightOrders.value || []);
+                oModel.setProperty("/drivers", drivers.value || []);
+                oModel.setProperty("/vehicles", vehicles.value || []);
+                oModel.setProperty("/assignments", assignments.value || []);
+                oModel.setProperty("/Vehassignments", vehAssignments.value || []);
+                oModel.setProperty("/proposals", drivers.value || []);
+                //MessageBox.show(freightOrders.length + " Freight Orders, " + drivers.length + " Drivers, " + vehicles.length + " Vehicles, and " + assignments.length + " Assignments loaded successfully.");
+
+                oModel.refresh(true);
+                oView.setModel(oModel);
+
+                this._render();
+
+            } catch (error) {
+                MessageBox.show("Unable to load Freight Orders." + (error.message || ""));
+            } finally {
+                oView.setBusy(false);
+            }
+        },
+
+        async assignFreightOrder(payload) {
+            const oView = this.getView();
+            try {
+                oView.setBusy(true);
+                const result = await DataService.post("/assignments", payload);
+                MessageToast.show(result.message || "Freight Order assigned successfully.");
+                await this.refreshData();
+
+            } catch (error) {
+                MessageBox.error(error.message || "Assignment failed.");
+            } finally {
+                oView.setBusy(false);
+            }
+        },
+        async refreshData() {
+
+            try {
+                await this.loadMasterData();
+                assignments = await AssignmentService.getAll();
+                aAssignments.push({
+                    driverId: oProposal.driverId,
+                    foId: oProposal.foId,
+                    start: oProposal.start,
+                    end: oProposal.end
+                });
+
+
+            } catch (error) {
+                MessageBox.warning("Assignment completed, but refresh failed." + (error.message || ""));
+            }
+        },
+
         onLogin: function () {
             var userId = this.byId("loginUserId").getValue().trim();
             var password = this.byId("loginPassword").getValue();
@@ -100,23 +187,14 @@ sap.ui.define([
                                 items: [
                                     new Toolbar({
                                         content: [
-                                            new Text({
-                                                text:
-                                                    "Select a Freight Order to view details or assign a driver."
-                                            }),
-
+                                            new Text({ text: "Select a Freight Order to view details or assign a driver." }),
                                             new ToolbarSpacer(),
                                             new Button({
-                                                icon: "sap-icon://refresh",
-                                                tooltip: "Refresh Freight Orders",
-                                                press: function () {
-                                                    oController
-                                                        ._refreshUnassignedFODialog();
-                                                }
+                                                icon: "sap-icon://refresh", tooltip: "Refresh Freight Orders",
+                                                press: function () { oController._refreshUnassignedFODialog(); }
                                             })
                                         ]
                                     }),
-
                                     new List({
                                         id: this.getView().createId(
                                             "unassignedFOFullScreenList"
@@ -219,143 +297,71 @@ sap.ui.define([
 
                 filters: [oFilter],
 
-                template: new sap.m.CustomListItem({
-
+                template: new CustomListItem({
                     content: [
-
-                        new sap.m.HBox({
-
+                        new HBox({
                             width: "100%",
-
-                            justifyContent:
-                                "SpaceBetween",
-
-                            alignItems:
-                                "Center",
-
+                            justifyContent: "SpaceBetween",
+                            alignItems: "Center",
                             items: [
-
                                 new sap.m.VBox({
-
                                     items: [
-
-                                        new sap.m.Title({
-
-                                            text: "{id}",
-
-                                            level: "H4"
-
-                                        }),
-
-                                        new sap.m.Text({
-
+                                        new Title({ text: "{id}", level: "H4" }),
+                                        new Text({
                                             text: {
-                                                parts: [
-                                                    { path: "origin" },
-                                                    { path: "destination" }
-                                                ],
-
+                                                parts: [{ path: "origin" }, { path: "destination" }],
                                                 formatter:
-                                                    function (
-                                                        sOrigin,
-                                                        sDestination
-                                                    ) {
-
-                                                        return (
-                                                            (sOrigin || "-") +
-                                                            " → " +
-                                                            (sDestination || "-")
+                                                    function (sOrigin, sDestination) {
+                                                        return ((sOrigin || "-") + " → " + (sDestination || "-")
                                                         );
-
                                                     }
                                             }
-
                                         }),
 
-                                        new sap.m.Text({
-
+                                        new Text({
                                             text: {
                                                 parts: [
-                                                    { path: "startTime" },
-                                                    { path: "endTime" }
+                                                    { path: "startTime" }, { path: "endTime" }
                                                 ],
-
                                                 formatter:
-                                                    function (
-                                                        sStart,
-                                                        sEnd
-                                                    ) {
-
-                                                        return (
-                                                            (sStart || "-") +
-                                                            " - " +
-                                                            (sEnd || "-")
-                                                        );
-
+                                                    function (sStart, sEnd) {
+                                                        return ((sStart || "-") + " - " + (sEnd || "-"));
                                                     }
                                             }
-
                                         })
-
                                     ]
-
                                 }),
-
-                                new sap.m.ObjectStatus({
-
-                                    text: "{status}",
-
-                                    state: "Warning",
-
-                                    inverted: true
-
-                                })
-
+                                new ObjectStatus({ text: "{status}", state: "Warning", inverted: true })
                             ]
-
                         })
-
                     ]
-
                 })
-
             });
         },
         _highlightFreightOrder: function (sFOId) {
 
-            var oFOHost =
-                document.getElementById("foGantt");
-
+            var oFOHost = document.getElementById("foGantt");
             if (!oFOHost) {
                 return;
             }
-
             /*
              * Remove previous selection
              */
             oFOHost
                 .querySelectorAll(".selectedFO")
                 .forEach(function (oElement) {
-
                     oElement.classList.remove(
                         "selectedFO"
                     );
-
                 });
-
             /*
              * Find selected FO
              */
-            var oFOBar =
-                oFOHost.querySelector(
-                    '[data-fo="' + sFOId + '"]'
-                );
-
+            var oFOBar = oFOHost.querySelector(
+                '[data-fo="' + sFOId + '"]'
+            );
             if (oFOBar) {
-
-                oFOBar.classList.add(
-                    "selectedFO"
-                );
+                oFOBar.classList.add("selectedFO");
 
                 oFOBar.scrollIntoView({
                     behavior: "smooth",
@@ -499,6 +505,7 @@ sap.ui.define([
         },
         onAcceptAIProposal: function () { this._acceptProposals(); },
         onRejectAIProposal: function () { this._rejectProposals(); },
+
         _setProposalActions: function (showReview) {
             this.byId("aiProposalButton").setVisible(!showReview);
             this.byId("acceptAIButton").setVisible(showReview);
@@ -907,12 +914,12 @@ sap.ui.define([
                 driver = m.getProperty("/drivers")
                     .find(d => d.id === did);
 
-                //  vehassn = m.getProperty("/Vehassignments")
-                //     .find(v => v.vehid === vid),
-                // veh = m.getProperty("/vehicles")
-                //     .find(v => v.vehid === vid);
+            //  vehassn = m.getProperty("/Vehassignments")
+            //     .find(v => v.vehid === vid),
+            // veh = m.getProperty("/vehicles")
+            //     .find(v => v.vehid === vid);
 
-           
+
 
             // //var a = this._assignFO(fo.id, driver.id, fo.id);
             // if (a)
@@ -1177,20 +1184,27 @@ sap.ui.define([
 
         _render: function () {
             var oController = this;
-            var m = oController.getView().getModel(); if (!m) return; setTimeout(function () {
-                var fos = m.getProperty("/freightOrders"),
-                    ds = m.getProperty("/drivers"),
-                    as = m.getProperty("/assignments"),
-                    veh = m.getProperty("/vehicles"),
+            var m = oController.getView().getModel();
+
+            if (!m) return;
+
+            setTimeout(function () {
+
+                var fos = m.getProperty("/freightOrders") || [],
+                    ds = m.getProperty("/drivers") || [],
+                    veh = m.getProperty("/vehicles") || [],
+                    as = m.getProperty("/assignments") || [],
                     ps = m.getProperty("/proposals"),
-                    vehass = m.getProperty("/Vehassignments")
-
-                        || [];
-
+                    vehass = m.getProperty("/Vehassignments") || [];
                 var fh = document.getElementById("foGantt"),
                     vh = document.getElementById("vehicleGantt"),
                     dh = document.getElementById("driverGantt");
 
+
+                if (!Array.isArray(fos)) {
+                    console.error("freightOrders is not an array", fos);
+                    return;
+                }
 
                 var aUnassignedFOs = fos.filter(function (oFO) {
                     return oFO.status === "Unassigned";
@@ -1260,12 +1274,17 @@ sap.ui.define([
 
                     }.bind(this));
 
-                    ps.filter(function (proposal) {
-                        return proposal.driverId === oDriver.id;
-                    }).forEach(function (proposal) {
-                        sRow += this._bar(proposal.start, proposal.end, "aiSuggestionBar", "AI Suggestion: " + proposal.foId)
-                            .replace("<div ", "<div data-proposal-fo='" + proposal.foId + "' ");
-                    }.bind(this));
+
+                    if (!Array.isArray(ps)) {
+                        ps.filter(function (proposal) {
+                            return proposal.driverId === oDriver.id;
+                        }).forEach(function (proposal) {
+                            sRow += this._bar(proposal.start, proposal.end, "aiSuggestionBar", "AI Suggestion: " + proposal.foId)
+                                .replace("<div ", "<div data-proposal-fo='" + proposal.foId + "' ");
+                        }.bind(this));
+                    }
+
+
 
                     // Remaining available time
                     if (iCurrentHour < 22) {
@@ -1301,7 +1320,7 @@ sap.ui.define([
 
                         // Available time before assignment
                         if (iCurrentHour < oAssignment.start) {
-                            sVehicleBars += this._bar(iCurrentHour,oAssignment.start,"availableBar","Available");
+                            sVehicleBars += this._bar(iCurrentHour, oAssignment.start, "availableBar", "Available");
                         }
                         // Vehicle assignment
                         sVehicleBars += this._vehicleOccupiedBar(oAssignment.start, oAssignment.end, oAssignment.foId, oAssignment.driverId);
@@ -1316,6 +1335,7 @@ sap.ui.define([
                         <div class="ganttRow vehRow" data-vehicle="${oVEH.vehid}">
                             <div class="rowLabel">
                                 <div class="foDetails">
+                                    <input type="checkBox" checked id="vehchecked"/>               
                                     <b>${oVEH.vehid}</b>
                                     <span style="font-size:9px;">
                                         (${oVEH.vehicle})
@@ -1592,7 +1612,7 @@ sap.ui.define([
                     e.preventDefault();
                     e.stopPropagation();
                     v.classList.remove("dropTarget");
-                    var oModel =  this.getView().getModel();
+                    var oModel = this.getView().getModel();
 
                     var foid = e.dataTransfer.getData("text/plain"),
                         fo = oModel
@@ -1628,7 +1648,7 @@ sap.ui.define([
                         if (bAssigned) {
                             //MessageToast.show(fo.id + " assigned to Driver " + sDriverId + " and Vehicle " + sVehicleId);
                             MessageToast.show(fo.id + " assigned to Vehicle " + sVehicleId);
-                        }                        
+                        }
                         this._assign(fo, sDriverId);
                     }
                 });
@@ -1855,5 +1875,59 @@ sap.ui.define([
             🚚
         </span> `;
         },
-  });
+
+        onToggleFO: function () {
+            var oModel = this.getView().getModel();
+
+            var bExpanded = oModel.getProperty("/ui/expandFO");
+            oModel.setProperty("/ui/expandFO", !bExpanded);
+            
+
+            setTimeout(() => {
+                this._render();
+
+            }, 10);
+        },
+
+        onToggleDrivers: function () {
+            var oModel = this.getView().getModel();
+            var bExpanded = oModel.getProperty("/ui/expandDrivers");
+
+            oModel.setProperty("/ui/expandDrivers", !bExpanded);
+
+            setTimeout(() => {
+                this._render();
+            }, 10);
+        },
+
+        onToggleVehicles: function () {
+            var oModel = this.getView().getModel();
+            var bExpanded = oModel.getProperty("/ui/expandVehicles");
+
+            oModel.setProperty("/ui/expandVehicles", !bExpanded);
+
+            setTimeout(() => {
+                this._render();
+            }, 10);
+        },
+        _updateSectionState: function () {
+
+            var oModel = this.getView().getModel();
+
+            this.byId("foSection").toggleStyleClass(
+                "ganttCollapsed",
+                !oModel.getProperty("/ui/expandFO")
+            );
+
+            this.byId("driverSection").toggleStyleClass(
+                "ganttCollapsed",
+                !oModel.getProperty("/ui/expandDrivers")
+            );
+
+            this.byId("vehicleSection").toggleStyleClass(
+                "ganttCollapsed",
+                !oModel.getProperty("/ui/expandVehicles")
+            );
+        }
+    });
 });
