@@ -1,4 +1,5 @@
 # # yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+# version: "1.136.0"
 
 specVersion: "4.0"
 metadata:
@@ -6,7 +7,7 @@ metadata:
 type: application
 framework:
   name: OpenUI5
-  version: "1.136.0"
+  version: "1.151.0"
   libraries:
     - name: sap.m
     - name: sap.ui.core
@@ -22,14 +23,20 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
+    # - name: ui5-middleware-simpleproxy
+    #   afterMiddleware: compression
+    #   configuration:
+    #     baseUri: "http://localhost:4004"
+    #     mountPath: "/api"  
     - name: fiori-tools-appreload
       afterMiddleware: compression
-      configuration:
+      configuration:           
         port: 35729
         path: webapp
-        delay: 300
+        delay: 300        
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
         flp:
           theme: sap_horizon
+    

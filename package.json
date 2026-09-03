@@ -8,15 +8,15 @@
     "sapui5"
   ],
   "main": "webapp/index.html",
-  "dependencies": {},
   "devDependencies": {
-    "@ui5/cli": "^4.0.33",
-    "@sap/ux-ui5-tooling": "1",
     "@sap-ux/eslint-plugin-fiori-tools": "^10.0.0",
+    "@sap/ux-ui5-tooling": "1",
+    "@ui5/cli": "^4.0.63",
     "eslint": "^10",
-    "ui5-task-zipper": "^3.4.x",
+    "mbt": "^1.2.29",
     "rimraf": "^5.0.5",
-    "mbt": "^1.2.29"
+    "ui5-middleware-simpleproxy": "^3.9.0",
+    "ui5-task-zipper": "^3.4.x"
   },
   "scripts": {
     "start": "fiori run --open \"test/flp.html#app-preview\"",
@@ -33,5 +33,8 @@
     "build:mta": "rimraf resources mta_archives && mbt build",
     "undeploy": "cf undeploy dispatchernsdispatcherapp --delete-services --delete-service-keys --delete-service-brokers"
   },
-  "sapuxLayer": "CUSTOMER_BASE"
+  "sapuxLayer": "CUSTOMER_BASE",
+  "dependencies": {
+    "cors": "^2.8.6"
+  }
 }

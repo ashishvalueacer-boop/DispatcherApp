@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+# # yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
 
 specVersion: "4.0"
 metadata:
@@ -6,7 +6,7 @@ metadata:
 type: application
 framework:
   name: SAPUI5
-  version: 1.151.0
+  version: 1.136.0
   libraries:
     - name: sap.m
     - name: sap.ui.core
@@ -17,9 +17,9 @@ server:
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
-        port: 35729
+        port: 4004
         path: webapp
-        delay: 300
+        delay: 300    
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
